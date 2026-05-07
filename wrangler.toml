@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name = "firefly"
 compatibility_date = "2026-05-07" 
 
@@ -6,3 +7,13 @@ directory = "./dist"
 
 [vars]
 NODE_VERSION = "22"
+=======
+name = "firefly"
+compatibility_date = "2026-05-07"
+
+[assets]
+directory = "./dist"
+
+[vars]
+NODE_VERSION = "22"
+>>>>>>> 41ab65d88a88e37ff529c718c6cd2838e3695d1c
