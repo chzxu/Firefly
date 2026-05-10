@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === "development") {
 export default defineConfig({
 	site: siteConfig.site_url,
 	adapter: cloudflare(),
-	output: "server",
+	output: "static",
 	
 	base: "/",
 	trailingSlash: "always",

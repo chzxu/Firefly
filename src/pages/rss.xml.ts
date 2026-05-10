@@ -1,3 +1,4 @@
+export const prerender = true;
 import { loadRenderers } from "astro:container";
 import { render } from "astro:content";
 import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
