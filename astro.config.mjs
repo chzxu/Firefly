@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === "development") {
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.site_url,
-	adapter: cloudflare(),
+	adapter: cloudflare({ imageService: { build: 'compile', runtime: 'passthrough' } }),
 	output: "static",
 	
 	base: "/",
