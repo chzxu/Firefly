@@ -1,3 +1,4 @@
+import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
@@ -45,6 +46,8 @@ if (process.env.NODE_ENV === "development") {
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.site_url,
+	adapter: cloudflare(),
+	output: "server",
 	
 	base: "/",
 	trailingSlash: "always",
