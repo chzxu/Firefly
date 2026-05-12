@@ -22,7 +22,7 @@
 ::github{repo="CuteLeaf/Firefly"}
 
 ::github{repo="saicaca/fuwari"}
-
+git add .
 
 ## 📫 联系方式
 
@@ -30,7 +30,7 @@
 
 - 💻 **GitHub**: [CuteLeaf](https://github.com/chzxu/)
 - ✉️ **Email**: [CZX22203927@163.com](CZX22203927.com)
-- 🐧 **QQ交流群：[2196157909](这个找不到)**
+- 🐧 **QQ：[2196157909](这个找不到)**
 
 ---
 

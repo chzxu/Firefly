@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firefly 博客管理导航</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        🔥 Firefly 管理导航
+        <span>v6.9.4</span>
+      </div>
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="search-input"
+          id="search-input"
+          placeholder="搜索功能...（如：壁纸、音乐、字体、头像、友链）"
+          autocomplete="off"
+        >
+        <div class="search-hint">支持中文/英文关键词搜索 · 快捷键 Ctrl+K</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <div class="container">
+    <!-- 分类筛选 -->
+    <div class="category-filters" id="category-filters"></div>
+
+    <!-- 结果统计 -->
+    <div class="result-count" id="result-count">共 0 个可配置项</div>
+
+    <!-- 功能卡片 -->
+    <div class="cards-grid" id="cards-grid"></div>
+  </div>
+
+  <!-- 详情弹窗 -->
+  <div class="modal-overlay" id="modal-overlay" style="display:none;"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
