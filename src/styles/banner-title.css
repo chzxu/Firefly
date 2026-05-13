@@ -9,6 +9,11 @@
     font-size: min(var(--banner-title-size, 3rem), 10vw);
 }
 
+/* 横幅标题出场动画 */
+.banner-title.onload-animation {
+    animation-duration: 500ms;
+}
+
 .banner-subtitle {
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
 }
