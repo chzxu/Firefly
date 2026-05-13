@@ -46,7 +46,10 @@ if (process.env.NODE_ENV === "development") {
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.site_url,
-	adapter: cloudflare({ imageService: { build: 'compile', runtime: 'passthrough' } }),
+	// Cloudflare 适配器仅在构建时启用（dev 模式 workerd 不兼容 CJS 模块）
+	adapter: import.meta.env.PROD
+		? cloudflare({ imageService: { build: 'compile', runtime: 'passthrough' } })
+		: undefined,
 	output: "static",
 	
 	base: "/",
