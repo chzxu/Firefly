@@ -21,6 +21,14 @@ export const galleryConfig: GalleryConfig = {
 			date: "2026-01-01",
 			tags: ["崩坏星穹铁道", "流萤"],
 		},
+		{
+			id: "Goldenglow",
+			name: "可爱澄闪",
+			description: "小苏茜很可爱。",
+			location: "明日方舟",
+			date: "2026-05-13",
+			tags: ["明日方舟", "澄闪"],
+		},
 	],
 
 	// 瀑布流最小列宽(px)，浏览器根据容器宽度自动计算列数，默认 240

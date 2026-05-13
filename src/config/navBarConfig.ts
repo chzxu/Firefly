@@ -76,6 +76,11 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				external: true,
 				icon: "fa7-brands:bilibili",
 			},
+			{
+				name: "CTF 学习笔记",
+				url: "/posts/ctf-learning/",
+				icon: "material-symbols:code",
+			},
 		],
 	});
 
