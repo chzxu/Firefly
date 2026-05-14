@@ -22,7 +22,8 @@ function withBase(assetPath: string): string {
  * 扫描相册目录中的所有图片文件
  */
 export function scanAlbumPhotos(albumId: string): string[] {
-	const dir = path.join(process.cwd(), "public", "gallery", albumId);
+	const projectRoot = path.resolve(import.meta.dirname, "../..");
+	const dir = path.join(projectRoot, "public", "gallery", albumId);
 	if (!fs.existsSync(dir)) return [];
 	const files = fs
 		.readdirSync(dir)
