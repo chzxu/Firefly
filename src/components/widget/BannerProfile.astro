@@ -1,0 +1,231 @@
+---
+import { Icon } from "astro-icon/components";
+import ImageWrapper from "@/components/common/ImageWrapper.astro";
+import { profileConfig } from "@/config/profileConfig";
+import {
+  getCategoryList,
+  getSortedPosts,
+  getTagList,
+} from "@/utils/content-utils";
+
+// 获取统计数据
+const posts = await getSortedPosts();
+const tags = await getTagList();
+const categories = await getCategoryList();
+
+const stats = [
+  { icon: "material-symbols:article-outline", label: "文章", value: posts.length },
+  { icon: "material-symbols:label-outline", label: "标签", value: tags.length },
+  { icon: "material-symbols:folder-outline", label: "分类", value: categories.length },
+];
+---
+
+<div class="banner-profile-card">
+  <!-- 桌面端：水平布局 -->
+  <div class="banner-profile-inner">
+    <a href="/about/" class="banner-profile-avatar-link">
+      <div class="banner-profile-avatar-ring">
+        <ImageWrapper
+          src={profileConfig.avatar || ""}
+          alt={profileConfig.name}
+          class="banner-profile-avatar-img"
+          loading="eager"
+          fetchpriority="high"
+          widths={[160]}
+          sizes="80px"
+        />
+      </div>
+    </a>
+    <div class="banner-profile-info">
+      <a href="/about/" class="banner-profile-name">{profileConfig.name}</a>
+      <p class="banner-profile-bio">{profileConfig.bio}</p>
+      <div class="banner-profile-stats">
+        {stats.map((stat) => (
+          <div class="banner-profile-stat-item">
+            <Icon name={stat.icon} class="banner-profile-stat-icon" />
+            <span class="banner-profile-stat-value">{stat.value}</span>
+            <span class="banner-profile-stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .banner-profile-card {
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .banner-profile-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .banner-profile-avatar-link {
+    display: block;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .banner-profile-avatar-link:hover {
+    transform: scale(1.08);
+  }
+
+  .banner-profile-avatar-link:active {
+    transform: scale(0.95);
+  }
+
+  .banner-profile-avatar-ring {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s;
+  }
+
+  .banner-profile-avatar-link:hover .banner-profile-avatar-ring {
+    border-color: var(--primary);
+  }
+
+  .banner-profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .banner-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .banner-profile-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    transition: color 0.2s;
+    line-height: 1.2;
+  }
+
+  .banner-profile-name:hover {
+    color: var(--primary);
+  }
+
+  .banner-profile-bio {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    max-width: 24rem;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .banner-profile-stats {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .banner-profile-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .banner-profile-stat-icon {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .banner-profile-stat-value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .banner-profile-stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* 平板端 */
+  @media (max-width: 1023px) {
+    .banner-profile-avatar-ring {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    .banner-profile-name {
+      font-size: 1.25rem;
+    }
+
+    .banner-profile-bio {
+      font-size: 0.8rem;
+      max-width: 20rem;
+    }
+
+    .banner-profile-stats {
+      gap: 1rem;
+    }
+
+    .banner-profile-stat-value {
+      font-size: 0.85rem;
+    }
+
+    .banner-profile-stat-label {
+      font-size: 0.75rem;
+    }
+  }
+
+  /* 手机端 */
+  @media (max-width: 640px) {
+    .banner-profile-inner {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .banner-profile-avatar-ring {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-width: 2px;
+    }
+
+    .banner-profile-name {
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .banner-profile-bio {
+      display: none;
+    }
+
+    .banner-profile-stats {
+      gap: 0.75rem;
+    }
+
+    .banner-profile-stat-icon {
+      font-size: 0.85rem;
+    }
+
+    .banner-profile-stat-value {
+      font-size: 0.8rem;
+    }
+
+    .banner-profile-stat-label {
+      display: none;
+    }
+  }
+</style>

@@ -70,6 +70,10 @@ export const isHomePage = (pathname: string): boolean => {
 	if (pathname === baseUrlNoSlash) return true;
 	if (pathname === "/") return true;
 
+	// 检查是否为分页首页路径，如 /2/, /3/ 等
+	const homePagePattern = /^\/\d+\/$/;
+	if (homePagePattern.test(pathname)) return true;
+
 	return false;
 };
 

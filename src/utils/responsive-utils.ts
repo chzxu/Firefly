@@ -76,18 +76,18 @@ export function generateGridClasses(config: ResponsiveSidebarConfig): {
 		if (config.tabletSidebar === "right") {
 			// 平板端显示右侧栏: 769-1279px [内容+右侧栏], 1280px+ [左+中+右]
 			gridCols =
-				"grid-cols-1 md:grid-cols-[1fr_17.5rem] xl:grid-cols-[17.5rem_1fr_17.5rem]";
+				"grid-cols-1 md:grid-cols-[1fr_20rem] xl:grid-cols-[16.25rem_1fr_20rem]";
 		} else {
 			// 平板端显示左侧栏（默认）: 769-1279px [左侧栏+内容], 1280px+ [左+中+右]
 			gridCols =
-				"grid-cols-1 md:grid-cols-[17.5rem_1fr] xl:grid-cols-[17.5rem_1fr_17.5rem]";
+				"grid-cols-1 md:grid-cols-[16.25rem_1fr] xl:grid-cols-[16.25rem_1fr_20rem]";
 		}
 	} else if (config.hasLeftComponents && !config.hasRightComponents) {
 		// 仅左侧边栏: 769px+显示左+中，768-以下单列
-		gridCols = "grid-cols-1 md:grid-cols-[17.5rem_1fr]";
+		gridCols = "grid-cols-1 md:grid-cols-[16.25rem_1fr]";
 	} else if (!config.hasLeftComponents && config.hasRightComponents) {
 		// 仅右侧边栏: 769px+显示中+右，768-以下单列
-		gridCols = "grid-cols-1 md:grid-cols-[1fr_17.5rem]";
+		gridCols = "grid-cols-1 md:grid-cols-[1fr_20rem]";
 	}
 
 	return { gridCols };
@@ -103,7 +103,7 @@ export function generateSidebarClasses(
 		"mb-4",
 		"hidden",
 		"md:col-span-1",
-		"md:max-w-70",
+		"md:max-w-[16.25rem]",
 		"md:row-start-1",
 		"md:row-end-3",
 		"md:col-start-1",
@@ -136,7 +136,7 @@ export function generateRightSidebarClasses(
 			"md:row-start-1",
 			"md:row-end-3",
 			"md:col-span-1",
-			"md:max-w-70",
+			"md:max-w-[20rem]",
 			"md:col-start-2", // 平板端在第2列
 			"xl:col-start-3", // 桌面端在第3列
 		);
@@ -147,7 +147,7 @@ export function generateRightSidebarClasses(
 			"xl:row-start-1",
 			"xl:row-end-3",
 			"xl:col-span-1",
-			"xl:max-w-70",
+			"xl:max-w-[20rem]",
 			"xl:col-start-3",
 		);
 	} else if (config.position === "right") {
@@ -157,7 +157,7 @@ export function generateRightSidebarClasses(
 			"md:row-start-1",
 			"md:row-end-3",
 			"md:col-span-1",
-			"md:max-w-70",
+			"md:max-w-[20rem]",
 			"md:col-start-2",
 		);
 	} else {
@@ -167,7 +167,7 @@ export function generateRightSidebarClasses(
 			"xl:row-start-1",
 			"xl:row-end-3",
 			"xl:col-span-1",
-			"xl:max-w-70",
+			"xl:max-w-[20rem]",
 			"xl:col-start-3",
 		);
 	}

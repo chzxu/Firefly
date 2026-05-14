@@ -3,10 +3,10 @@ import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import { Icon } from "astro-icon/components";
 import CoverImage from "@/components/common/CoverImage.astro";
-import PostMetadata from "@/components/layout/PostMeta.astro";
+import ImageWrapper from "@/components/common/ImageWrapper.astro";
+import { profileConfig } from "@/config/profileConfig";
 import { siteConfig } from "@/config";
-import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 import { getApiUrlList, processCoverImageSync } from "@/utils/image-utils";
 import { getFileDirFromPath, getTagUrl } from "@/utils/url-utils";
 
@@ -43,15 +43,12 @@ const {
 } = Astro.props;
 const className = Astro.props.class;
 
-// 处理随机图：如果image为"api"，则从配置的API获取随机图
 const processedImage = processCoverImageSync(image, entry.id);
 const apiUrls = getApiUrlList(image, entry.id);
 const hasCover =
 	processedImage !== undefined &&
 	processedImage !== null &&
 	processedImage !== "";
-
-const coverWidth = "30%";
 
 const showTags = siteConfig.postListLayout.showTags;
 const descriptionLines = Math.max(
@@ -63,6 +60,8 @@ const shouldClampDescription = descriptionLines > 0;
 
 const { remarkPluginFrontmatter } = await render(entry);
 const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
+
+const publishedDateStr = formatDateToYYYYMMDD(published);
 ---
 
 <div
@@ -70,57 +69,64 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
     "post-card-wrapper",
     hasCover ? "has-cover" : "no-cover",
     pinned ? "pinned" : "",
-    "card-base flex flex-col-reverse w-full rounded-(--radius-large) overflow-hidden relative",
+    "card-base flex flex-col w-full rounded-(--radius-large) overflow-hidden relative",
     className,
   ]}
   style={style}
 >
-  <!-- pinned icon -->
+  <!-- B 站风格卡片头部：头像 + 用户名 + 日期 -->
+  <div class="post-card-header flex items-center gap-3 px-4 md:px-6 pt-4 md:pt-5">
+    <a href="/about/" class="flex-shrink-0" aria-label={profileConfig.name}>
+      <div class="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden border-2 border-(--primary) flex-shrink-0">
+        <ImageWrapper
+          src={profileConfig.avatar || ""}
+          alt={profileConfig.name}
+          class="w-full h-full object-cover"
+          widths={[36]}
+          sizes="36px"
+          loading="lazy"
+        />
+      </div>
+    </a>
+    <div class="flex flex-col min-w-0">
+      <span class="text-sm font-bold text-(--primary)">{profileConfig.name}</span>
+      <span class="text-xs text-neutral-400">{publishedDateStr}</span>
+    </div>
+    <div class="ml-auto flex items-center gap-1.5">
+      {pinned && (
+        <span class="text-xs bg-(--primary)/10 text-(--primary) px-2 py-0.5 rounded-full font-medium flex items-center gap-0.5">
+          <Icon name="material-symbols:pinboard" class="text-xs" />置顶
+        </span>
+      )}
+      {password && (
+        <Icon name="material-symbols:lock-outline" class="text-base text-neutral-400" />
+      )}
+    </div>
+  </div>
+
+  <!-- 卡片内容 -->
   <div
     class:list={[
       "post-card-content",
-      "pl-4 md:pl-9 pr-4 md:pr-2 pt-4 md:pt-7 pb-4 md:pb-7 relative flex flex-col h-full",
-      {
-        "w-full md:w-[calc(100%-52px-12px)]": !hasCover,
-        "w-full md:w-[calc(100%-var(--coverWidth)-1.5rem)]": hasCover,
-      },
+      "px-4 md:px-6 pt-3 pb-4",
+      "flex flex-col",
+      "w-full",
     ]}
   >
+    <!-- 标题 -->
     <a
       href={url}
-      class="post-card-title transition group w-full block font-bold mb-3 text-3xl text-90
+      class="post-card-title font-bold mb-2 text-xl leading-snug
         hover:text-(--primary) dark:hover:text-(--primary)
-        active:text-(--title-active) dark:active:text-(--title-active)
-        before:w-1 before:h-5 before:rounded-md before:bg-(--primary)
-        before:absolute before:top-[35px] before:left-[18px] before:hidden md:before:block"
+        active:text-(--title-active) dark:active:text-(--title-active)"
     >
       {title}
-
-      {
-        password && (
-          <Icon
-            name="material-symbols:lock-outline"
-            class="inline text-2xl align-middle -translate-y-px"
-          />
-        )
-      }
     </a>
 
-    <!-- metadata -->
-    <PostMetadata
-      published={published}
-      tags={tags}
-      showTags={false}
-      category={category || undefined}
-      pinned={pinned}
-      password={password}
-      className="mb-4 post-meta"
-    />
-
-    <!-- description -->
+    <!-- 描述文本 -->
     <div
       class:list={[
-        "transition text-75 md:pr-4 description grow",
+        "text-sm text-75 mb-3 leading-relaxed description",
         { "description-clamped": shouldClampDescription },
       ]}
       title={descriptionText}
@@ -128,47 +134,24 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
       {descriptionText}
     </div>
 
-    <!-- tags -->
-    {
-      showTags && (
-        <div class="text-sm text-black/30 dark:text-white/30 flex flex-wrap gap-2 transition stats pt-3">
-          {tags &&
-            tags.length > 0 &&
-            tags.map((tag, _i) => (
-              <a
-                href={getTagUrl(tag)}
-                aria-label={`View all posts with the ${tag.trim()} tag`}
-                class="btn-regular h-6 text-xs px-2 py-1 rounded-md
-                         transition-all duration-200 hover:scale-105 active:scale-95"
-              >
-                #{tag.trim()}
-              </a>
-            ))}
-          {!(tags && tags.length > 0) && (
-            <span class="text-(--content-meta) text-xs">
-              #{i18n(I18nKey.noTags)}
-            </span>
-          )}
-        </div>
-      )
-    }
-  </div>
-  {
-    hasCover && (
+    <!-- 封面图（列表模式在描述下方，网格模式在标题上方） -->
+    {hasCover && (
       <a
         href={url}
         aria-label={title}
         class:list={[
           "post-card-image",
           "group",
-          "w-full md:w-(--coverWidth)",
-          "aspect-2/1 md:aspect-auto",
-          "relative md:absolute md:top-4 md:bottom-4 md:right-4",
-          "rounded-(--radius-large) md:rounded-xl overflow-hidden",
+          "relative",
+          "w-full",
+          "mb-3",
+          "rounded-xl overflow-hidden",
+          "aspect-2/1",
+          "order-first md:order-none",  // 网格模式图片置顶
         ]}
       >
         <div class="absolute pointer-events-none z-10 w-full h-full group-hover:bg-black/30 group-active:bg-black/50 transition" />
-        <div class="absolute pointer-events-none z-20 w-full h-full flex items-center justify-center ">
+        <div class="absolute pointer-events-none z-20 w-full h-full flex items-center justify-center">
           <Icon
             name="material-symbols:chevron-right-rounded"
             class="transition opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 text-white text-5xl"
@@ -184,31 +167,46 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
           apiUrls={apiUrls}
         />
       </a>
-    )
-  }
+    )}
 
-  {
-    !hasCover && (
+    <!-- 底部互动栏 -->
+    <div class="post-card-footer flex items-center justify-between mt-1 pt-3 border-t border-(--line-divider)">
       <a
         href={url}
-        aria-label={title}
-        class:list={[
-          "post-card-enter-btn",
-          "flex btn-regular w-13",
-          "absolute right-3 top-3 bottom-3 rounded-xl bg-(--enter-btn-bg)",
-          "hover:bg-(--enter-btn-bg-hover) active:bg-(--enter-btn-bg-active) active:scale-95",
-        ]}
+        class="post-card-read-btn inline-flex items-center gap-1 text-sm text-(--primary) font-medium
+               hover:bg-(--primary)/10 px-3 py-1.5 rounded-lg transition"
       >
-        <Icon
-          name="material-symbols:chevron-right-rounded"
-          class="transition text-(--primary) text-4xl mx-auto"
-        />
+        <Icon name="material-symbols:auto-stories-outline" class="text-lg" />
+        阅读全文
       </a>
-    )
-  }
+
+      <div class="flex items-center gap-3 text-xs text-neutral-400">
+        {category && (
+          <a href={getTagUrl(category)} class="hover:text-(--primary) transition">
+            <Icon name="material-symbols:book-2-outline-rounded" class="text-sm inline mr-0.5" />
+            {category}
+          </a>
+        )}
+        {tags && tags.length > 0 && (
+          <span class="flex items-center gap-1">
+            <Icon name="material-symbols:tag-rounded" class="text-sm" />
+            {tags.slice(0, 2).map((tag) => (
+              <a href={getTagUrl(tag)} class="hover:text-(--primary) transition">#{tag.trim()}</a>
+            ))}
+          </span>
+        )}
+      </div>
+    </div>
+  </div>
 </div>
 
-<style define:vars={{ coverWidth, descriptionClampLines }}>
+<style define:vars={{ descriptionClampLines }}>
+  /* 封面图完整展示（不裁剪） */
+  .post-card-image :global(.cover-image-container img) {
+    object-fit: contain !important;
+    background: var(--card-bg);
+  }
+
   .description-clamped {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -217,152 +215,132 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
     line-clamp: var(--descriptionClampLines);
   }
 
-  /* === List Mode Mobile Styles === */
-  /* 移动端列表模式：封面在右侧，内容缩小 */
+  /* 文章卡片头部样式 */
+  .post-card-header {
+    position: relative;
+  }
+
+  .post-card-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: var(--line-divider);
+    opacity: 0.5;
+  }
+
+  /* 封面图默认样式 */
+  .post-card-image {
+    order: -1;
+  }
+
+  /* === List Mode Styles === */
+  /* 列表模式：封面图内嵌在内容中（B 站动态风格） */
   :global(.list-mode) .post-card-wrapper {
-    flex-direction: row !important;
+    flex-direction: column !important;
   }
 
-  :global(.list-mode) .has-cover .post-card-content {
-    width: calc(100% - 9rem - 0.75rem) !important;
-    padding: 0.75rem 0.5rem 0.75rem 0.75rem !important;
-  }
-
-  :global(.list-mode) .has-cover .post-card-image {
-    position: absolute !important;
-    top: 0.5rem !important;
-    bottom: 0.5rem !important;
-    right: 0.5rem !important;
-    width: 9rem !important;
-    aspect-ratio: auto !important;
+  :global(.list-mode) .post-card-image {
+    order: 0 !important; /* 恢复默认顺序，在描述和底部栏之间 */
+    width: 100% !important;
+    max-height: 20rem !important;
     border-radius: 0.75rem !important;
   }
 
   :global(.list-mode) .post-card-title {
-    font-size: 1.125rem !important;
-    line-height: 1.75rem !important;
+    font-size: 1.15rem !important;
+    line-height: 1.6 !important;
     margin-bottom: 0.5rem !important;
   }
 
-  :global(.list-mode) .post-card-title::before {
-    display: none !important;
+  :global(.list-mode) .post-card-header {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 1rem !important;
   }
 
-  :global(.list-mode) .stats {
-    gap: 0.25rem !important;
+  :global(.list-mode) .post-card-header::after {
+    left: 1rem !important;
+    right: 1rem !important;
   }
 
-  :global(.list-mode) .no-cover .post-card-content {
-    width: calc(100% - 52px - 12px) !important;
+  :global(.list-mode) .post-card-content {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
-  :global(.list-mode) .post-card-enter-btn {
-    display: flex !important;
-  }
-
-  /* 移动端列表模式 - 隐藏tags，只在有空间时显示 */
-  :global(.list-mode) .stats a {
-    font-size: 0.65rem !important;
-    padding: 0.125rem 0.375rem !important;
-    height: 1.25rem !important;
-  }
-
-  /* === Desktop List Mode overrides === */
+  /* === Desktop List Mode === */
   @media (min-width: 768px) {
-    :global(.list-mode) .post-card-wrapper {
-      flex-direction: row !important;
+    :global(.list-mode) .post-card-header {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
     }
 
-    :global(.list-mode) .has-cover .post-card-content {
-      width: calc(100% - var(--coverWidth) - 1.5rem) !important;
-      padding: 1.75rem 0.5rem 1.75rem 2.25rem !important;
+    :global(.list-mode) .post-card-header::after {
+      left: 1.5rem !important;
+      right: 1.5rem !important;
     }
 
-    :global(.list-mode) .has-cover .post-card-image {
-      top: 1rem !important;
-      bottom: 1rem !important;
-      right: 1rem !important;
-      width: var(--coverWidth) !important;
-      border-radius: 0.75rem !important;
+    :global(.list-mode) .post-card-content {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
     }
 
     :global(.list-mode) .post-card-title {
-      font-size: 1.5rem !important;
-      line-height: 2rem !important;
+      font-size: 1.35rem !important;
       margin-bottom: 0.75rem !important;
-    }
-
-    :global(.list-mode) .post-card-title::before {
-      display: block !important;
-      top: 2.25rem !important;
-      height: 1rem !important;
-    }
-
-    :global(.list-mode) .description {
-      font-size: inherit !important;
-    }
-
-    :global(.list-mode) .stats a {
-      font-size: 0.75rem !important;
-      padding: 0.25rem 0.5rem !important;
-      height: 1.5rem !important;
-    }
-
-    :global(.list-mode) .no-cover .post-card-content {
-      width: calc(100% - 52px - 12px) !important;
-    }
-
-    :global(.list-mode) .post-card-enter-btn {
-      display: flex !important;
     }
   }
 
   /* === Grid Mode Styles === */
-  /* 网格模式：封面在顶部（移动端和桌面端一致） */
+  /* 网格模式：封面在卡片最顶部 */
   :global(.grid-mode) .post-card-wrapper {
-    flex-direction: column-reverse !important;
+    flex-direction: column !important;
     height: 100% !important;
-    justify-content: flex-end !important;
-  }
-
-  :global(.grid-mode) .post-card-content {
-    width: 100% !important;
-    height: auto !important;
-    flex-grow: 1 !important;
   }
 
   :global(.grid-mode) .post-card-image {
-    position: relative !important;
-    top: auto !important;
-    bottom: auto !important;
-    right: auto !important;
+    order: -1 !important; /* 封面在网格模式置顶 */
     width: 100% !important;
     margin: 0 !important;
     border-radius: var(--radius-large) var(--radius-large) 0 0 !important;
-    max-height: none !important;
     aspect-ratio: 2/1 !important;
+    max-height: none !important;
+    margin-bottom: 0 !important;
   }
 
-  :global(.grid-mode) .description {
-    flex-grow: 0 !important;
+  :global(.grid-mode) .post-card-content {
+    flex-grow: 1 !important;
+    padding-top: 0.5rem !important;
   }
 
-  :global(.grid-mode) .stats {
+  :global(.grid-mode) .post-card-header {
+    padding-top: 0.25rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  :global(.grid-mode) .post-card-header::after {
+    display: none !important;
+  }
+
+  :global(.grid-mode) .post-card-content {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  :global(.grid-mode) .post-card-title {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+
+  :global(.grid-mode) .post-card-footer {
     margin-top: auto !important;
   }
 
-  :global(.grid-mode) .has-cover .post-card-content {
-    padding-top: 0.8rem !important;
-  }
-  :global(.grid-mode) .has-cover .post-card-title::before {
-    top: 1.3rem !important;
-  }
-
-  :global(.grid-mode) .no-cover .post-card-content {
-    width: calc(100% - 52px - 12px) !important;
-  }
-
-  :global(.grid-mode) .post-card-enter-btn {
-    display: flex !important;
+  :global(.grid-mode) .description {
+    display: none !important;
   }
 </style>

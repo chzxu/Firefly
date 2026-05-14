@@ -16,8 +16,8 @@ import { LinkPreset, type NavBarLink } from "@/types/config";
 import { getFallbackFormat, getImageFormats } from "@/utils/image-utils";
 import { isHomePage } from "@/utils/layout-utils";
 import { url } from "@/utils/url-utils";
-import DropdownMenu from "./DropdownMenu.astro";
 import NavMenuPanel from "./NavMenuPanel.astro";
+import UserMenu from "./UserMenu.astro";
 
 const className = Astro.props.class;
 
@@ -124,17 +124,37 @@ if (isLocalSrcLogo) {
                 </div>
             </a>
             <div class:list={[
-                "hidden lg:flex items-center space-x-1 col-start-2",
+                "hidden lg:flex items-center gap-4 col-start-2",
                 isNavbarMenuCentered
                     ? "justify-center"
                     : "justify-start pl-2"
             ]}>
-                {links.map((l) => {
-                    return <DropdownMenu link={l} />;
+                {links.map((link) => {
+                    const isExternal = !link.url?.startsWith("/") && link.url?.startsWith("http");
+                    const target = isExternal ? "_blank" : undefined;
+                    const rel = isExternal ? "noopener" : undefined;
+                    const currentPath = Astro.url?.pathname || "";
+                    const isActive = !isExternal && link.url && currentPath === link.url;
+                    return (
+                        <a
+                            href={link.url}
+                            target={target}
+                            rel={rel}
+                            class:list={[
+                                "px-5 py-2.5 rounded-lg text-[0.95rem] font-medium transition-all duration-200",
+                                "hover:text-(--primary) hover:bg-(--primary)/5 focus-visible:outline-2 focus-visible:outline-(--primary)",
+                                "active:scale-95",
+                                isActive
+                                    ? "text-(--primary) bg-(--primary)/8"
+                                    : "text-black/70 dark:text-white/70",
+                            ]}
+                        >
+                            {link.name}
+                        </a>
+                    );
                 })}
             </div>
             <div class="flex col-start-3 justify-self-end">
-                <!--<SearchPanel client:load>-->
                 <Search
                     client:load
                 />
@@ -143,6 +163,9 @@ if (isLocalSrcLogo) {
                         <Icon name="material-symbols:music-note-rounded" is:inline class="text-[1.25rem]"></Icon>
                     </button>
                 )}
+                <div class="flex items-center mr-1">
+                    <UserMenu />
+                </div>
                 {hasDisplaySettings && (
                         <button aria-label="Display Settings" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="display-settings-switch">
                             <Icon name="material-symbols:palette-outline" is:inline class="text-[1.25rem]"></Icon>

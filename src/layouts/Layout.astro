@@ -1294,20 +1294,20 @@ function disableAnimation() {
       // 从right临时扩展为both时，平板端保持显示右侧栏
       const effectiveTabletSidebar = (shouldBothSidebars && sidebarPosition === "right") ? "right" : tabletSidebar;
       if (effectiveTabletSidebar === "right") {
-        newGridClasses = "grid-cols-1 md:grid-cols-[1fr_17.5rem] xl:grid-cols-[17.5rem_1fr_17.5rem]";
+        newGridClasses = "grid-cols-1 md:grid-cols-[1fr_20rem] xl:grid-cols-[16.25rem_1fr_20rem]";
       } else {
-        newGridClasses = "grid-cols-1 md:grid-cols-[17.5rem_1fr] xl:grid-cols-[17.5rem_1fr_17.5rem]";
+        newGridClasses = "grid-cols-1 md:grid-cols-[16.25rem_1fr] xl:grid-cols-[16.25rem_1fr_20rem]";
       }
     } else if (sidebarPosition === "right") {
       // 仅右侧栏
-      newGridClasses = "grid-cols-1 md:grid-cols-[1fr_17.5rem]";
+      newGridClasses = "grid-cols-1 md:grid-cols-[1fr_20rem]";
     } else {
       // 仅左侧栏
-      newGridClasses = "grid-cols-1 md:grid-cols-[17.5rem_1fr]";
+      newGridClasses = "grid-cols-1 md:grid-cols-[16.25rem_1fr]";
     }
 
     // 移除旧类并添加新类
-    ["grid-cols-1", "md:grid-cols-[17.5rem_1fr]", "md:grid-cols-[1fr_17.5rem]", "xl:grid-cols-[17.5rem_1fr_17.5rem]"].forEach(
+    ["grid-cols-1", "md:grid-cols-[16.25rem_1fr]", "md:grid-cols-[1fr_20rem]", "xl:grid-cols-[16.25rem_1fr_20rem]"].forEach(
       cls => mainGrid.classList.remove(cls)
     );
 
