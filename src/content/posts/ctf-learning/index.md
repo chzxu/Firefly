@@ -70,3 +70,40 @@ draft: false
 无需安装任何工具，点击页面顶部的跳转按钮即可打开。所有数据（学习进度、点击记录）均存储在浏览器 `localStorage` 中，不会丢失。
 
 如果你也想系统学习 CTF 网络安全，希望这个导航页能帮到你。
+
+---
+
+## 📚 CTF Web 学习笔记系列（共 19 篇）
+
+导航页解决「去哪练、查什么」，这一套笔记解决「怎么想、怎么动手」。它整理了 **11 道 Web 靶场的完整解题思路**，外加一整套工具箱速查 —— 每篇都按「一眼看懂 → 思路图 → 动手步骤 → 原理拆解 → 延伸与防御」展开，命令和回显都是实跑出来的。
+
+### 入门与靶场篇
+
+| # | 文章 | 一句话考点 |
+|---|---|---|
+| 00 | [总览｜CTF Web 入门地图](/posts/ctf-learning/00-overview/) | 11 道题的主线、四条铁律、通用排查口诀 |
+| 01 | [问剑石·天赋测试](/posts/ctf-learning/01-wenjianshi/) | 页面显示的中文，不是后端校验的值 |
+| 02 | [D-Accelerator｜命令注入](/posts/ctf-learning/02-command-injection/) | `ping` 参数被拼进 shell → RCE |
+| 03 | [七绝傀儡阵｜HTTP 请求的七个部位](/posts/ctf-learning/03-qijue-kuileizhen/) | 七道禁制对应请求报文的七个零件 |
+| 04 | [Project X｜三种文件泄露](/posts/ctf-learning/04-projectx/) | 备份包 / `.git` 历史 / `.DS_Store` |
+| 05 | [eieieieaa｜混淆 JS 与 e/i 二进制](/posts/ctf-learning/05-eieieieaa/) | 25 条假 flag，真东西藏在注释里 |
+| 06 | [玄机阁·九重天衍禁制｜SQL 注入](/posts/ctf-learning/06-sql-injection/) | 报错被关掉时怎么判断注入 |
+| 07 | [玄机阁·天衍真言术｜魔法哈希](/posts/ctf-learning/07-magic-hash/) | 两个不同的值，md5 却「相等」 |
+| 08 | [破界之眼｜路径穿越](/posts/ctf-learning/08-path-traversal/) | 没拦住 `../` 的任意文件读取 |
+| 09 | [千机禁域｜只挡前门](/posts/ctf-learning/09-qianji-jinyu/) | 参数枚举 + `php://filter` 读源码 |
+| 10 | [灵纹上传·通幽关｜文件上传绕过](/posts/ctf-learning/10-file-upload/) | 后缀 / 魔数 / `.htaccess` 三张牌 |
+| 11 | [站内搜索｜服务端模板注入 SSTI](/posts/ctf-learning/11-ssti/) | 输入被拼进模板就成了服务器上的代码 |
+
+### 工具箱速查
+
+| # | 文章 | 内容 |
+|---|---|---|
+| 99 | [工具箱总入口](/posts/ctf-learning/99-0-toolbox/) | 标注说明、排查口诀、索引 |
+| 99-1 | [浏览器与 Burp](/posts/ctf-learning/99-1-browser-burp/) | F12、改包、中文编码的坑 |
+| 99-2 | [命令行与脚本](/posts/ctf-learning/99-2-cli-script/) | `curl.exe`、Python 模板、Node + jsdom |
+| 99-3 | [git 速查](/posts/ctf-learning/99-3-git/) | 翻历史、`reflog`、`safe.directory` |
+| 99-4 | [编码与魔法哈希](/posts/ctf-learning/99-4-encoding/) | 进制互转、`0e` 碰撞表 |
+| 99-5 | [上传绕过速查](/posts/ctf-learning/99-5-upload-bypass/) | 三张牌 + 三条硬规矩 |
+| 99-6 | [真实报错对照表](/posts/ctf-learning/99-6-errors/) | 踩过的报错 → 真正原因 → 修法 |
+
+> 建议从 [00 总览](/posts/ctf-learning/00-overview/) 开始读；每篇文章顶部都有系列导航，可以直接跳到相邻章节。
