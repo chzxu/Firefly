@@ -68,17 +68,15 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否允许用户通过控制面板切换横幅标题显示
 			switchable: true,
 			// 主页横幅主标题
-			title: "This is a blog",
+			title: "丛中笑",
 			// 主页横幅主标题字体大小
 			titleSize: "3.8rem",
 			// 主页横幅副标题
 			subtitle: [
-				"In Reddened Chrysalis, I Once Rest",
-				"From Shattered Sky, I Free Fall",
-				"Amidst Silenced Stars, I Deep Sleep",
-				"Upon Lighted Fyrefly, I Soon Gaze",
-				"From Undreamt Night, I Thence Shine",
-				"In Finalized Morrow, I Full Bloom",
+				"运维 / 云原生 / 网络安全",
+				"每一次动手，都留下证据",
+				"记录实验，也记录踩过的坑",
+				"待到山花烂漫时，她在丛中笑",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",

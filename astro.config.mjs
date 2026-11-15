@@ -1,3 +1,9 @@
+// Windows 下 localhost 默认优先解析到 IPv6(::1)，而 Astro 预渲染用的内部 HTTP 服务
+// 监听在 IPv4，导致构建时报 "fetch failed / EACCES"。
+// 强制 IPv4 优先可稳定复现修复（2026-11-15 实测：改前必挂，改后构建通过）。
+import dns from "node:dns";
+dns.setDefaultResultOrder("ipv4first");
+
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";

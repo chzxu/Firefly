@@ -47,8 +47,8 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 		{
 			// 组件类型：公告组件
 			type: "announcement",
-			// 是否启用该组件
-			enable: true,
+			// 是否启用该组件（用户要求：不要左侧公告）
+			enable: false,
 			// 组件位置
 			position: "top",
 			// 是否在文章详情页显示
@@ -111,20 +111,32 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	// 右侧边栏组件配置列表
 	rightComponents: [
 		{
-			// 组件类型：站点统计组件
-			type: "stats",
+			// 组件类型：系列文章导航（按分类折叠的章节树，当前文章所在系列自动展开）
+			type: "seriesNav",
 			// 是否启用该组件
 			enable: true,
 			// 组件位置
 			position: "top",
 			// 是否在文章详情页显示
 			showOnPostPage: true,
+			// 是否在非文章详情页显示
+			showOnNonPostPage: true,
+		},
+		{
+			// 组件类型：站点统计组件
+			type: "stats",
+			// 是否启用该组件
+			enable: true,
+			// 组件位置
+			position: "top",
+			// 是否在文章详情页显示（文章页右侧留给"文章导航 + 本篇目录"）
+			showOnPostPage: false,
 		},
 		{
 			// 组件类型：日历组件
 			type: "calendar",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "sticky",
 			// 是否在文章详情页显示
@@ -170,8 +182,8 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 		{
 			// 组件类型：公告组件
 			type: "announcement",
-			// 是否启用该组件
-			enable: true,
+			// 是否启用该组件（用户要求：不要左侧公告）
+			enable: false,
 			// 是否在文章详情页显示
 			showOnPostPage: true,
 		},

@@ -17,17 +17,18 @@ export const siteConfig: SiteConfig = {
 
 	// 站点描述
 	description:
-		"这是一个blog",
+		"丛中笑的个人博客 —— 运维、云原生与网络安全的学习记录",
 
 	// 站点关键词
 	keywords: [
 		"丛中笑",
-		"Fuwari",
-		"Astro",
-		"ACGN",
-		"博客",
+		"运维",
+		"云原生",
+		"Kubernetes",
+		"Linux",
+		"CTF",
+		"网络安全",
 		"技术博客",
-		"静态博客",
 	],
 
 	// 主题色
@@ -132,10 +133,10 @@ export const siteConfig: SiteConfig = {
 		friends: true,
 		// 赞助页面开关
 		sponsor: false,
-		// 留言板页面开关，需要配置评论系统
-		guestbook: true,
+		// 留言板页面开关，需要配置评论系统（用户要求：不要留言板）
+		guestbook: false,
 		// 番组计划页面开关，含追番、游戏、书籍和音乐，dev调试时只获取一页数据，build才会获取全部数据
-		bangumi: true,
+		bangumi: false,
 		// 相册页面开关
 		gallery: true,
 	},

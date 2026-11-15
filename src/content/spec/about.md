@@ -1,38 +1,26 @@
-# 关于我 / About Me
+# 关于我
 
-你好！我是 **丛中笑** ，一个普通的网络菜鸟。
+我是 **丛中笑**，一名在读本科生，方向是 **运维 / 云原生**，同时对网络安全有兴趣。
 
-## 🛠️ 关于本站
+## 在学什么
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+- Linux 与系统故障排查
+- Docker / Kubernetes
+- 云上部署与日常运维
+- Web 安全与 CTF
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+## 这里写什么
 
+记录学习过程中的实验、故障复盘和踩过的坑。
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+内容不求完整，只求**每篇都对得上一次真实的动手**。
 
-**🏠我的博客： [https://blog.orderchen0613.xyz/about/](https://blog.orderchen0613.xyz/about/)**
+## 联系
 
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
-
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
-
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
-git add .
-
-## 📫 联系方式
-
-如果你想和我交流技术问题，分享有趣的想法，或者只是想打个招呼，欢迎通过以下方式联系我：
-
-- 💻 **GitHub**: [CuteLeaf](https://github.com/chzxu/)
-- ✉️ **Email**: [CZX22203927@163.com](CZX22203927.com)
-- 🐧 **QQ：[2196157909](这个找不到)**
+- GitHub：[chzxu](https://github.com/chzxu/)
+- Bilibili：[我的空间](https://space.bilibili.com/425521484)
+- Email：[CZX22203927@163.com](mailto:CZX22203927@163.com)
 
 ---
 
-*感谢你的来访！希望在这里能找到对你有用的内容！*
-
+本站基于 [Astro](https://astro.build) 与开源主题 [Firefly](https://github.com/CuteLeaf/Firefly) 构建，在此致谢。
