@@ -7,6 +7,8 @@ category: 运维案例分析
 draft: false
 ---
 
+> **运维案例分析**（共 3 篇）　[01 磁盘写满](/posts/ops-cases/01-disk-fill-baseline/)　·　[02 空间不释放](/posts/ops-cases/02-deleted-but-space-held/)　·　[03 端口占用](/posts/ops-cases/03-port-already-in-use/)
+
 > 环境：Ubuntu 22.04（WSL2）· 实测于 2026-11-16
 
 ## 1. 症状
